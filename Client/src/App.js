@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
-
 import { history } from './_helpers';
 import { alertActions } from './_actions';
 import { PrivateRoute } from './_components';
@@ -14,6 +13,13 @@ import Logout from './views/Logout';
 import Navpage from './views/Navpage';
 import Fileshare from './views/Fileshare';
 import UserDetails from './views/UserDetails';
+import ListDir from './views/ListDir';
+import Mainhome from './views/Mainhome';
+import Mainhomeleftnav from './views/Mainhomeleftnav';
+import Fileleftnav from './views/Fileleftnav';
+import MainFilePage from "./views/MainFilePage";
+import Trialtable from "./views/Trialtable";
+
 
 class App extends React.Component {
     constructor(props) {
@@ -47,6 +53,14 @@ class App extends React.Component {
                                 <Route path="/Fileshare" component={Fileshare}/>
                                 <Route path="/Logout" component={Logout}/>
                                 <Route path="/UserDetails" component={UserDetails}/>
+                                <Route path="/ListDir" component={ListDir}/>
+                                <Route path="/Mainhome" component={Mainhome}/>
+                                <Route path="/Mainhomeleftnav" component={Mainhomeleftnav}/>
+                                <Route path="/Fileleftnav" component={Fileleftnav}/>
+                                <Route path="/MainFilePage" component={MainFilePage}/>
+                                <Route path="/Trialtable" component={Trialtable}/>
+
+                                
                             </div>
                         </Router>
                     </div>

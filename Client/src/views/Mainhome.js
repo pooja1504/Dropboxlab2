@@ -1,0 +1,55 @@
+import React from 'react';
+import { Route, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Mainhomeleftnav from './Mainhomeleftnav';
+import ListDir from './ListDir';
+import Fileupload from'./Fileupload';
+import { history } from '../_helpers';
+class Mainhome extends React.Component {
+    handleUser()
+    {
+        history.push("/UserDetails");
+    }
+    render() {
+
+        return (
+            <div>
+                <div className="container-fluid" style={{backgroundColor:'#FAFAFA'}}>
+                    <div>
+                        <div className="row">
+                            <div className="col-md-4 col-lg-4 col-lg-pull-4" style={{width:10,paddingTop:20}}>
+                                <Mainhomeleftnav/>
+                            </div>
+
+                            <div className="col-md-7" style={{paddingTop:20}}>
+                                <h4>Dropbox</h4>
+                                <div className="input-group stylish-input-group">
+                                    <input type="text" className="form-control"  placeholder="Search"/>
+                                    <span className="input-group-addon">
+                                        <button type="submit">
+                                            <span className="glyphicon glyphicon-search"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                                <br/>
+                                <br/>
+                                <ListDir/>
+                            </div>
+                            <div className="col-md-4 col-lg-4 col-lg-push-4" style={{backgroundColor:'#FAFAFA',width:270}}>
+                                <br/>
+
+                                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                <img src={require('../images/user.png')} style={{width:40,height:40,float:'center'}} onClick={this.handleUser}/>
+                            <Fileupload/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    );
+    }
+}
+
+export default Mainhome;

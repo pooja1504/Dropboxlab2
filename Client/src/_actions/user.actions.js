@@ -2,30 +2,30 @@ import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
 import { history } from '../_helpers';
-import * as fileuploadservice from '../_services/fileuploadservice';
 
 
 export const userActions = {
     login,
    logout,
+   checksession,
     register,
-    //getAll,
+    getDetails,
    // delete: _delete
    //listfiles
 };
 
 function login(email, password) {
+    console.log(password);
     return dispatch => {
         dispatch(request({ email }));
 
         userService.login(email, password)
             .then(
                 responseJson => { 
-                    if(responseJson.status==201)
+                    if(responseJson.code==200)
                     {
-                    console.log("in actions " + responseJson.user.email + responseJson.status);
-                    dispatch(success(responseJson.user));
-                    history.push('/UserDetails');
+                    //dispatch(success(responseJson.user));
+                    history.push('/ListDir');
                     }
                 
                 else
@@ -48,6 +48,25 @@ function logout() {
     return { type: userConstants.LOGOUT };
 }
 
+function getDetails() {
+    console.log("hryy");
+    return dispatch => {
+        userService.getDetails()
+            .then(responseJson => {
+                    if(responseJson)
+                    {
+                        const user= responseJson;
+                        dispatch(successuserdetails(user));
+                    }
+
+                    else
+                    {
+                        console.log("hii");
+                    }
+                } );
+    };
+    function successuserdetails(user){return { type: userConstants.USER_DETAILS,user}}
+}
 function register(user) {
      console.log(user);
     return dispatch => {
@@ -72,7 +91,30 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
+function checksession()
+{
+    return dispatch => {
+       // dispatch(request(user));
 
+        userService.checksession()
+            .then(
+                responseJson => { 
+                    if(responseJson.status==300)
+                    {
+                    dispatch(success(responseJson.user));
+                    history.push('/UserDetails');
+                    }
+                
+                else
+                {
+                    
+                   history.push('./login');
+                
+                }
+           } );
+    };
+    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+}
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 /*function _delete(id) {

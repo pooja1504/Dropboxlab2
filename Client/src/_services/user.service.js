@@ -4,50 +4,62 @@ export const userService = {
     login,
    logout,
     register,
-    getuserdetails
-    /*getAll,
-    getById,
-    update,
-    delete: _delete*/
+    checksession,
+    getDetails
 };
-
-function login(email, password) {
+const headers = {
+    'Accept': 'application/json'
+};
+function login(username, password) {
+    console.log("username"+username+"password"+password);
     const requestOptions = {
         method: 'POST',
+        mod:'cors',
+        headers: {...headers,'Content-Type': 'application/json' },
         credentials:'include',
-        mode:'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({username,password})
     };
 
-    return fetch('http://localhost:3001/auth/login', requestOptions)
-       /* .then(response => {
-            if (!response.ok) { 
-                return Promise.reject(response.statusText);
-            }})*/
-         
+    return fetch('http://localhost:3001/login', requestOptions)
         .then((response) => response.json()).then((responseJson) => {
     return responseJson;
 });
 }
 function register(user) {
+    console.log(user);
     const requestOptions = {
         method: 'POST',
-       // credentials:'include',
+       credentials:'include',
        // mod:'cors',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { ...headers,'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch('http://localhost:3001/auth/signup', requestOptions).then(handleResponse);
+    return fetch('http://localhost:3001/signup', requestOptions).then(handleResponse);
+}
+function checksession(){
+    const status = 201;
+    const requestOptions = {
+        method: 'POST',
+        credentials:'include',
+        mode:'cors',
+        headers: { ...headers,'Content-Type': 'application/json'},
+        body: JSON.stringify({status})
+    };
+
+    return fetch('http://localhost:3001/checkSession', requestOptions)
+        .then((response) => response.json()).then((responseJson) => {
+    return responseJson;
+});
 }
 
-function getuserdetails()
+function getDetails()
 {
-    fetch('http://localhost:3001/getuserdetails').then((response) => response.json()).then((responseJson) => {
-       console.log(responseJson);
-       return responseJson; 
-}
-)
+   // return fetch('http://localhost:3001/getDetails');
+      const responseJson={
+          firstName:"pooja"
+      }
+      console.log(responseJson);
+       return responseJson ;
 }
 function logout() {
     history.push('/login');
